@@ -67,6 +67,7 @@ class TrainAndTestSerializer2(serializers.Serializer):
 class TestSerializer(serializers.Serializer):
     mode_operation = ("test", "test")
     model_name = serializers.CharField(max_length=10, allow_blank=False)
+    backbone = serializers.CharField(max_length=10, allow_blank=False)
     load_name = serializers.CharField(max_length=1000, allow_blank=True)
     mode = serializers.ChoiceField(mode_operation)
     dataset = serializers.CharField(max_length=100)
@@ -86,7 +87,7 @@ class TrainSeriazlizer(serializers.Serializer):
                       "test", "test")
     prefix = serializers.CharField(max_length=10, default='a')
     model_name = serializers.CharField(max_length=10, allow_blank=False)
-    # backbone = serializers.CharField(max_length=10, allow_blank=False)
+    backbone = serializers.CharField(max_length=10, allow_blank=False)
     mode = serializers.ChoiceField(mode_operation)
     dataset = serializers.CharField(max_length=100)
     save_freq = serializers.IntegerField(default=20, )

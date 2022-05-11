@@ -29,6 +29,7 @@ class TrainAndTest(models.Model):
     ]
     prefix = models.CharField(max_length=10, default='a', help_text="default a")
     model_name = models.ForeignKey(SegModel, on_delete=models.CASCADE)
+    backbone = models.CharField(max_length=19, default='')
     load_name = models.ForeignKey(SavedModel, on_delete=models.CASCADE)
     mode = models.CharField(choices=mode_option, max_length=5)
     dataset = models.CharField(max_length=100)
