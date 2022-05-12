@@ -49,7 +49,9 @@ class TrainView(ModelViewSet):
     serializer_class = serializers.TrainSeriazlizer
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
+        validated_data = request.data
+        print(validated_data)
+        run_my_model.delay(**validated_data)
         return Response({"ok": 200})
 
 

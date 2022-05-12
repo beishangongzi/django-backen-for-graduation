@@ -18,16 +18,16 @@ class Train:
     def __init__(self, dataset_path, model, batch_size, shuffle, mode="train", **kwargs):
 
         self.dataset = dataset.ObtTrainDataset(dataset_path, mode=mode)
-        self.batch_size = batch_size
-        self.shuffle = shuffle
+        self.batch_size = int(batch_size)
+        self.shuffle = bool(shuffle)
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         print(f"using {self.device}")
         self.model = model.to(self.device)
 
     def train(self, save_name, save_freq, lr, epoch):
-        epoch = epoch
+        epoch = int(epoch)
         criterion = nn.CrossEntropyLoss().to(self.device)
-        optimizer = optim.Adam(self.model.parameters(), lr=lr)
+        optimizer = optim.Adam(self.model.parameters(), lr=float(lr))
         dl = DataLoader(dataset=self.dataset, batch_size=self.batch_size, shuffle=True)
         for i in range(epoch):
             print("------------{} begin--------------".format(i))
