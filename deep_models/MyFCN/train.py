@@ -26,6 +26,7 @@ class Train:
 
     def train(self, save_name, save_freq, lr, epoch):
         epoch = int(epoch)
+        save_freq = int(save_freq)
         criterion = nn.CrossEntropyLoss().to(self.device)
         optimizer = optim.Adam(self.model.parameters(), lr=float(lr))
         dl = DataLoader(dataset=self.dataset, batch_size=self.batch_size, shuffle=True)
