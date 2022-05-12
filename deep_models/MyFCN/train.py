@@ -51,8 +51,8 @@ class Train:
                 running_loss += loss.cpu().item()
             print(running_loss / j / self.batch_size)
             if (i + 1) % save_freq == 0:
-                torch.save(self.model.state_dict(), f"models/{save_name}.pth")
-        torch.save(self.model.state_dict(), f"models/{save_name}_last_.pth")
+                torch.save(self.model.state_dict(), os.path.join(os.path.dirname(__file__), f"models/{save_name}.pth"))
+        torch.save(self.model.state_dict(), os.path.join(os.path.dirname(__file__),f"models/{save_name}_last_.pth"))
 
     def test(self, save_name):
         """
