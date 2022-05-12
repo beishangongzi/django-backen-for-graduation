@@ -14,24 +14,28 @@ class FCN(nn.Module):
             self.features = VGG16()
             self.num_classes = num_classes
             input_channels = 512
+            sub = 1
         elif backbone == "resnet50":
             self.features = ResNet.get_resnet50()
             input_channels = 2048
+            sub = 2
         elif backbone == "resnet101":
             self.features = ResNet.get_resnet101()
             input_channels = 2048
+            sub = 2
         elif backbone == "resnet152":
             self.features = ResNet.get_resnet152()
             input_channels = 2048
+            sub = 2
         else:
             raise ValueError(f"backbone must be ont of the item in {all_backones}")
 
         self.num_classes = num_classes
-        self.deconv1 = nn.ConvTranspose2d(input_channels, input_channels, 3, 2, padding=1, output_padding=1)
-        self.bn1 = nn.BatchNorm2d(input_channels)
-        self.deconv2 = nn.ConvTranspose2d(input_channels, input_channels//2, 3, 2, padding=1, output_padding=1)
-        self.bn2 = nn.BatchNorm2d(input_channels//2)
-        self.deconv3 = nn.ConvTranspose2d(input_channels//2, input_channels//4, 3, 2, padding=1, output_padding=1)
+        self.deconv1 = nn.ConvTranspose2d(input_channels, input_channels//sub, 3, 2, padding=1, output_padding=1)
+        self.bn1 = nn.BatchNorm2d(input_channels//sub)
+        self.deconv2 = nn.ConvTranspose2d(input_channels//sub, input_channels//(sub * 2), 3, 2, padding=1, output_padding=1)
+        self.bn2 = nn.BatchNorm2d(input_channels//(sub * 2))
+        self.deconv3 = nn.ConvTranspose2d(input_channels//(sub * 2), input_channels//4, 3, 2, padding=1, output_padding=1)
         self.bn3 = nn.BatchNorm2d(input_channels//4)
         self.deconv4 = nn.ConvTranspose2d(input_channels//4, input_channels//8, 3, 2, padding=1, output_padding=1)
         self.bn4 = nn.BatchNorm2d(input_channels//8)
