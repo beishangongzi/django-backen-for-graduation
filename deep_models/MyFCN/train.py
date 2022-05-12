@@ -113,7 +113,7 @@ class Train:
                     PIL.Image.fromarray(morphology_dilate).save(morphology_dilate_name)
 
 
-def run(model_name=None, save_name=None, mode=None, dataset=None, backbone=None, lr=None, epoch=None, load_name=None, save_freq=20, **kwargs):
+def run(model_name='', prefix='', mode='', dataset='', backbone='', lr='', epoch='', load_name=None, save_freq='', **kwargs):
     models = {"FCN32": FCN32, "FCN16": FCN16, "FCN8": FCN8, "Unet": Unet}
     print(model_name, "-------")
     if model_name not in models.keys():
@@ -121,6 +121,7 @@ def run(model_name=None, save_name=None, mode=None, dataset=None, backbone=None,
     model = models.get(model_name)
     model = model(5, backbone)
     train = Train(dataset, model, 8, True, mode=mode)
+    save_name = "-".join([prefix, model_name, backbone, epoch, lr])
     if mode == "train":
         print("train")
         train.train(save_name, save_freq,
