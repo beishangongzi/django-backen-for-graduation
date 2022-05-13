@@ -85,7 +85,6 @@ class Train:
                     outputs = self.model(inputs)["out"]
                 except:
                     outputs = self.model(inputs)
-                outputs = self.model(inputs)
                 batch = outputs.size()[0]
                 for i in range(batch):
                     output = outputs[i]
