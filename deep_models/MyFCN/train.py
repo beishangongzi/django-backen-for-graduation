@@ -29,7 +29,7 @@ class Train:
         epoch = int(epoch)
         save_freq = int(save_freq)
         criterion = nn.CrossEntropyLoss().to(self.device)
-        optimizer = optim.Adam(self.model.parameters(), lr=float(lr))
+        optimizer = optim.Adam(self.model.parameters(), lr=float(lr), weight_decay=1e-4)
         dl = DataLoader(dataset=self.dataset, batch_size=self.batch_size, shuffle=True)
         for i in range(epoch):
             print("------------{} begin--------------".format(i))
