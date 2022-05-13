@@ -11,6 +11,7 @@ from torchmetrics import ConfusionMatrix
 import deep_models.MyFCN.dataset as dataset
 import deep_models.MyFCN.utils as utils
 from deep_models.MyFCN.model.FCN import FCN32, FCN16, FCN8
+from deep_models.MyFCN.model.FCN2 import my_fcn_resnet50
 from deep_models.MyFCN.model.Unet.Unet import Unet
 from graduation_design import settings
 
@@ -45,7 +46,10 @@ class Train:
 
                 optimizer.zero_grad()
 
-                outputs = self.model(inputs)
+                try:
+                    outputs = self.model(inputs)["out"]
+                except:
+                    outputs = self.model(inputs)
                 loss = criterion(outputs, target)
                 loss.backward()
                 optimizer.step()
@@ -77,6 +81,10 @@ class Train:
             for data in dl:
                 inputs, names = data
                 inputs = inputs.to(self.device)
+                try:
+                    outputs = self.model(inputs)["out"]
+                except:
+                    outputs = self.model(inputs)
                 outputs = self.model(inputs)
                 batch = outputs.size()[0]
                 for i in range(batch):
@@ -163,7 +171,7 @@ class Train:
 
 def run(model_name='', prefix='', mode='', dataset='', backbone='', lr='', epoch='', load_name=None, save_freq='',
         **kwargs):
-    models = {"FCN32": FCN32, "FCN16": FCN16, "FCN8": FCN8, "Unet": Unet}
+    models = {"FCN32": FCN32, "FCN16": FCN16, "FCN8": FCN8, "Unet": Unet, "FCN": my_fcn_resnet50}
     print(model_name, "-------")
     if model_name not in models.keys():
         raise ValueError(f"model name must in {models.keys().__str__()}")
