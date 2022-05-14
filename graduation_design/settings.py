@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'students',
     'deep_models',
     'static_manage',
+    'new_deep_models',
+
 ]
 
 MIDDLEWARE = [

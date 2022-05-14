@@ -24,4 +24,5 @@ urlpatterns = [
     path('students/', include('students.urls')),
     path('deep-model/', include('deep_models.urls')),
     path('media-management/', include('static_manage.urls')),
+    path('new-deep-model/', include('new_deep_models.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

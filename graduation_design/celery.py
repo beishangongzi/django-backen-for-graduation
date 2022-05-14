@@ -8,6 +8,7 @@ import time
 
 # set the default Django settings module for the 'celery' program.
 from deep_models.MyFCN.train import run
+from new_deep_models.deep_learning.train import new_run
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'graduation_design.settings')
 app = Celery('graduation_design')
@@ -33,6 +34,15 @@ def run_my_model(**kwargs):
         p.update({key: kwargs[key][0]})
     run(**p)
     return kwargs
+
+
+@app.task(bind=False)
+def run_new_model(**kwargs):
+    # new_run()
+    kwargs.pop("id")
+    print(kwargs)
+    new_run(**kwargs)
+
 
 if __name__ == '__main__':
     pass
